@@ -1,15 +1,8 @@
 package com.delv1n.dud;
 
 import android.content.Context;
-import android.content.res.TypedArray;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
-import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -57,12 +50,12 @@ public class DateTaskView extends ConstraintLayout {
         recyclerView.setAdapter(adapter);
 
         // Устанавливаем обработчик для кнопки добавления
-        addButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Добавляем новую задачу в список
-                adapter.addTask("New task " + (adapter.getItemCount() + 1));
-            }
+        addButton.setOnClickListener(v -> {
+            TaskDialog taskDialog = new TaskDialog(getContext(), (taskName, time, remind, type) -> {
+                // Добавляем задачу в адаптер RecyclerView
+                adapter.addTask(taskName + " | " + time + " | " + type);
+            });
+            taskDialog.show();
         });
     }
 

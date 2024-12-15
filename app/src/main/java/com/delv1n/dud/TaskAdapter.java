@@ -42,7 +42,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         holder.textView.setText(task);
 
         // Обработчик удаления элемента
-        holder.deleteButton.setOnClickListener(v -> removeTask(position));
+        holder.deleteButton.setOnClickListener(v -> {
+            int currentPosition = holder.getAdapterPosition();
+            if (currentPosition != RecyclerView.NO_POSITION) {
+                removeTask(currentPosition);
+            }
+        });
     }
 
     @Override

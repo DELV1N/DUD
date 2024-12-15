@@ -2,6 +2,11 @@
     <string name="app_name">DUD</string>
     <string name="list">List</string>
     <string name="calendar">Calendar</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="task_types">
+        <item>Meeting</item>
+        <item>Work</item>
+        <item>Study</item>
+        <item>Home</item>
+        <item>Holiday</item>
+    </string-array>
 </resources>
