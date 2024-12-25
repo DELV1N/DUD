@@ -12,6 +12,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.time.LocalDateTime;
+
 public class DateTaskView extends ConstraintLayout {
 
     private TextView textViewDate;
@@ -51,11 +53,11 @@ public class DateTaskView extends ConstraintLayout {
 
         // Устанавливаем обработчик для кнопки добавления
         addButton.setOnClickListener(v -> {
-            TaskDialog taskDialog = new TaskDialog(getContext(), (taskName, time, remind, type) -> {
-                // Добавляем задачу в адаптер RecyclerView
-                adapter.addTask(taskName + " | " + time + " | " + type);
-            });
-            taskDialog.show();
+//            TaskDialog taskDialog = new TaskDialog(getContext(), (taskName, time, remind, type) -> {
+//                // Добавляем задачу в адаптер RecyclerView
+//                adapter.addTask(taskName + " | " + time + " | " + type);
+//            });
+            showTaskDialog();
         });
     }
 
@@ -81,5 +83,26 @@ public class DateTaskView extends ConstraintLayout {
 
     public interface OnAddButtonClickListener {
         void onAddClick();
+    }
+
+    public interface OnDateSelectedListener {
+        LocalDateTime onDateSelected();
+    }
+
+    private OnDateSelectedListener onDateSelectedListener;
+
+    public void setOnDateSelectedListener(OnDateSelectedListener listener) {
+        this.onDateSelectedListener = listener;
+    }
+
+    public void showTaskDialog() {
+        if (onDateSelectedListener != null) {
+            LocalDateTime selectedDate = onDateSelectedListener.onDateSelected();
+            TaskDialog taskDialog = new TaskDialog(getContext(), selectedDate, (taskName, time, remind, type) -> {
+                // Добавляем задачу в адаптер RecyclerView
+                adapter.addTask(taskName + " | " + selectedDate + " | " + time + " | " + type);
+            });
+            taskDialog.show();
+        }
     }
 }
