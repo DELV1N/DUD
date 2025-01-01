@@ -12,6 +12,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.time.LocalDateTime;
+
 public class DateTaskView extends ConstraintLayout {
 
     private TextView textViewDate;
@@ -51,7 +53,8 @@ public class DateTaskView extends ConstraintLayout {
 
         // Устанавливаем обработчик для кнопки добавления
         addButton.setOnClickListener(v -> {
-            TaskDialog taskDialog = new TaskDialog(getContext(), (taskName, time, remind, type) -> {
+            String currentDate = getDateText();
+            TaskDialog taskDialog = new TaskDialog(getContext(), LocalDateTime.parse(currentDate), (taskName, time, remind, type) -> {
                 // Добавляем задачу в адаптер RecyclerView
                 adapter.addTask(taskName + " | " + time + " | " + type);
             });
@@ -81,5 +84,10 @@ public class DateTaskView extends ConstraintLayout {
 
     public interface OnAddButtonClickListener {
         void onAddClick();
+    }
+
+    // Добавить метод для получения адаптера
+    public TaskAdapter getAdapter() {
+        return adapter;
     }
 }

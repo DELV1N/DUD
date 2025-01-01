@@ -12,6 +12,10 @@ import android.widget.Switch;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.delv1n.dud.tasks.TaskService;
+
+import java.time.LocalDateTime;
+
 public class TaskDialog {
 
     public interface OnTaskAddedListener {
@@ -19,10 +23,12 @@ public class TaskDialog {
     }
 
     private final Context context;
+    private final LocalDateTime currentDate;
     private final OnTaskAddedListener listener;
 
-    public TaskDialog(Context context, OnTaskAddedListener listener) {
+    public TaskDialog(Context context, LocalDateTime currentDate, OnTaskAddedListener listener) {
         this.context = context;
+        this.currentDate = currentDate;
         this.listener = listener;
     }
 
@@ -48,13 +54,16 @@ public class TaskDialog {
         // Обработчик кнопки OK
         okButton.setOnClickListener(v -> {
             String taskName = taskNameInput.getText().toString();
-            String time = Integer.toString(taskTimeInput.getHour());
+            //String time = currentDate + "T" + taskTimeInput.getHour() + ":" + taskTimeInput.getMinute();
+            LocalDateTime time = currentDate.withHour(taskTimeInput.getHour()).withMinute(taskTimeInput.getMinute());
             boolean remind = remindSwitch.isChecked();
             String type = taskTypeSpinner.getSelectedItem().toString();
 
             // Передача данных в callback
             if (!taskName.isEmpty()) {
-                listener.onTaskAdded(taskName, time, remind, type);
+                TaskService taskService = new TaskService(context);
+                taskService.addTask(taskName, time, remind, type);
+                //listener.onTaskAdded(taskName, time, remind, type);
                 dialog.dismiss();
             } else {
                 Toast.makeText(context, "Task name cannot be empty", Toast.LENGTH_SHORT).show();

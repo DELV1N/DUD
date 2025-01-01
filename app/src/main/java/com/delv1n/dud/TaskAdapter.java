@@ -21,6 +21,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         notifyItemInserted(tasks.size() - 1);
     }
 
+    // Метод для замены всех задач
+    public void setTasks(List<String> newTasks) {
+        tasks.clear();
+        tasks.addAll(newTasks);
+        notifyDataSetChanged(); // Обновляем весь список
+    }
+
     public void removeTask(int position) {
         if (position >= 0 && position < tasks.size()) {
             tasks.remove(position);

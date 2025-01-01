@@ -2,6 +2,7 @@ package com.delv1n.dud.tasks;
 
 import android.content.Context;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -31,6 +32,13 @@ public class TaskService {
     public void getAllTasks(Callback<List<Task>> callback) {
         executorService.execute(() -> {
             List<Task> tasks = taskDao.getAllTasks();
+            callback.onComplete(tasks);
+        });
+    }
+
+    public void getTasksByDate(LocalDateTime date, Callback<List<Task>> callback) {
+        executorService.execute(() -> {
+            List<Task> tasks = taskDao.getTasksByDate(date.toString());
             callback.onComplete(tasks);
         });
     }
