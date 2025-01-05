@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">DUD</string>
+    <string name="list">Список</string>
+    <string name="calendar">Календарь</string>
+    <string name="enter_task_name">Введите название задачи</string>
+    <string name="task_name">Название задачи</string>
+    <string name="remind_me">Напомнить</string>
+    <string name="task_type">Тип задачи</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Отмена</string>
+    <string name="empty_task_name">Название задачи не может быть пустым</string>
+    <string name="upcoming_task">Предстоящая задача:</string>
+    <string name="permission_title">Разрешение на отправку уведомлений</string>
+    <string name="permission_message">Для отправки уведомлений, приложению требуется предоставить разрешение</string>
+    <string name="go_to_settings">Перейти в настройки</string>
+    <string-array name="task_types">
+        <item>Встреча</item>
+        <item>Работа</item>
+        <item>Учёба</item>
+        <item>Дом. дела</item>
+        <item>Мероприятие</item>
+    </string-array>
+</resources>

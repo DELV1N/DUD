@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -9,13 +10,13 @@
     tools:context=".MainActivity"
     tools:ignore="VisualLintBounds">
 
+    <!-- Tab Layout -->
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/background"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:tabGravity="fill"
@@ -33,17 +34,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/list" />
-
     </com.google.android.material.tabs.TabLayout>
 
+    <!-- CalendarView -->
     <CalendarView
         android:id="@+id/calendarView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
+        app:layout_constraintTop_toBottomOf="@id/tabLayout" />
 
+    <!-- DateTaskView -->
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
@@ -55,7 +57,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calendarView">
+        app:layout_constraintTop_toBottomOf="@id/calendarView">
 
         <com.delv1n.dud.DateTaskView
             android:id="@+id/dateTaskView"
@@ -63,4 +65,15 @@
             android:layout_height="match_parent" />
     </LinearLayout>
 
+    <!-- Container for grouped task lists -->
+    <LinearLayout
+        android:id="@+id/listContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tabLayout" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,6 +2,17 @@
     <string name="app_name">DUD</string>
     <string name="list">List</string>
     <string name="calendar">Calendar</string>
+    <string name="enter_task_name">Enter task name</string>
+    <string name="task_name">Task name</string>
+    <string name="remind_me">Remind me</string>
+    <string name="task_type">Task type</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="empty_task_name">Task name cannot be empty</string>
+    <string name="upcoming_task">Upcoming Task:</string>
+    <string name="permission_title">Sending notification permission</string>
+    <string name="permission_message">The app needs to grant permission to send notifications</string>
+    <string name="go_to_settings">Go to settings</string>
     <string-array name="task_types">
         <item>Meeting</item>
         <item>Work</item>

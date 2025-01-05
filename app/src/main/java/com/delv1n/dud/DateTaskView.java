@@ -12,7 +12,11 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.delv1n.dud.tasks.Task;
+
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DateTaskView extends ConstraintLayout {
 
@@ -20,6 +24,8 @@ public class DateTaskView extends ConstraintLayout {
     private RecyclerView recyclerView;
     private ImageButton addButton;
     private TaskAdapter adapter;
+
+    public LocalDateTime selectedDate;
 
     public DateTaskView(@NonNull Context context) {
         super(context);
@@ -48,15 +54,15 @@ public class DateTaskView extends ConstraintLayout {
 
         // Инициализируем RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        adapter = new TaskAdapter();
+        adapter = new TaskAdapter(getContext());
         recyclerView.setAdapter(adapter);
 
         // Устанавливаем обработчик для кнопки добавления
         addButton.setOnClickListener(v -> {
-            String currentDate = getDateText();
-            TaskDialog taskDialog = new TaskDialog(getContext(), LocalDateTime.parse(currentDate), (taskName, time, remind, type) -> {
+            TaskDialog taskDialog = new TaskDialog(getContext(), selectedDate, (taskName, time, remind, type) -> {
                 // Добавляем задачу в адаптер RecyclerView
-                adapter.addTask(taskName + " | " + time + " | " + type);
+                Task task = new Task(taskName, LocalDateTime.parse(time), remind, type);
+                adapter.addTask(task);
             });
             taskDialog.show();
         });

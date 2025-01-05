@@ -1,5 +1,6 @@
 package com.delv1n.dud;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,28 +10,39 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.delv1n.dud.tasks.Task;
+import com.delv1n.dud.tasks.TaskService;
+
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
 
-    private final List<String> tasks = new ArrayList<>();
+    public List<Task> tasksList = new ArrayList<>();
+    private final Context context;
 
-    public void addTask(String task) {
-        tasks.add(task);
-        notifyItemInserted(tasks.size() - 1);
+    public TaskAdapter(@NonNull Context context) {
+        this.context = context;
+    }
+
+    public void addTask(Task task) {
+        tasksList.add(task);
+        notifyItemInserted(tasksList.size() - 1);
     }
 
     // Метод для замены всех задач
-    public void setTasks(List<String> newTasks) {
-        tasks.clear();
-        tasks.addAll(newTasks);
+    public void setTasks(List<Task> newTasks) {
+        tasksList.clear();
+        tasksList.addAll(newTasks);
         notifyDataSetChanged(); // Обновляем весь список
     }
 
     public void removeTask(int position) {
-        if (position >= 0 && position < tasks.size()) {
-            tasks.remove(position);
+        if (position >= 0 && position < tasksList.size()) {
+            tasksList.remove(position);
             notifyItemRemoved(position);
         }
     }
@@ -45,21 +57,27 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
-        String task = tasks.get(position);
-        holder.textView.setText(task);
+        Task task = tasksList.get(position);
+        holder.textView.setText(String.format("%s | %s | %s", task.date.format(DateTimeFormatter.ofPattern("HH:mm")), task.name,task.type));
 
         // Обработчик удаления элемента
         holder.deleteButton.setOnClickListener(v -> {
             int currentPosition = holder.getAdapterPosition();
             if (currentPosition != RecyclerView.NO_POSITION) {
+                TaskService taskService = new TaskService(v.getContext());
+                taskService.deleteTask(task.id);
+
                 removeTask(currentPosition);
+
+                MainActivity mainActivity = (MainActivity) context;
+                mainActivity.runOnUiThread(mainActivity::removeEmptyDateTaskViews);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return tasks.size();
+        return tasksList.size();
     }
 
     static class TaskViewHolder extends RecyclerView.ViewHolder {

@@ -14,9 +14,9 @@ public interface TaskDao {
     @Query("DELETE FROM tasks WHERE id = :id")
     void deleteById(int id);
 
-    @Query("SELECT * FROM tasks")
+    @Query("SELECT * FROM tasks ORDER BY date")
     List<Task> getAllTasks();
 
-    @Query("SELECT * FROM tasks WHERE DATE(date) = DATE(:date)")
+    @Query("SELECT * FROM tasks WHERE DATE(date) = DATE(:date) ORDER BY date")
     List<Task> getTasksByDate(String date);
 }
