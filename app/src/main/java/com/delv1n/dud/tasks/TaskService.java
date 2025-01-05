@@ -32,8 +32,10 @@ public class TaskService {
         executorService.execute(() -> {
             Task task = new Task(name, date, remindMe, type);
             taskDao.insert(task);
-            Intent intent = new Intent(context, NotificationService.class);
-            context.startService(intent);
+            if (task.remindMe) {
+                Intent intent = new Intent(context, NotificationService.class);
+                context.startService(intent);
+            }
         });
     }
 
